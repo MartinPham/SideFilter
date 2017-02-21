@@ -11,6 +11,8 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 	UIScrollView* _scrollView;
 }
 @property (assign) NSMutableArray *allItems;
+// @property (assign) UITextField *filterTextField;
+@property (assign) UISearchBar *filterSearchBar;
 @property (nonatomic,copy) NSArray * displayItems;  
 -(void)_updateScrollViewFrameAndContentSize;
 -(void)_updateVisiblePageViews;
@@ -20,6 +22,8 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 
 %hook SBSideSwitcherScrollingItemViewController
 %property (assign) NSMutableArray *allItems;
+// %property (assign) UITextField *filterTextField;
+%property (assign) UISearchBar *filterSearchBar;
 
 -(void)viewDidLoad {
 	%orig;
@@ -31,25 +35,61 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 		view.tag = 181188;
 		createBlurView(view, view.bounds, UIBlurEffectStyleDark);
 
-		UITextField *filterTextField = [[UITextField alloc] init];
-		filterTextField.borderStyle = UITextBorderStyleRoundedRect;
-		filterTextField.frame = CGRectMake(15,7,view.frame.size.width - 30,30);
-		filterTextField.delegate = self;
-		filterTextField.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.3];
-		filterTextField.textColor = [UIColor whiteColor];
-
+		// self.filterTextField = [[UITextField alloc] init];
+		// self.filterTextField.borderStyle = UITextBorderStyleRoundedRect;
+		// self.filterTextField.frame = CGRectMake(15,7,view.frame.size.width - 30,30);
+		// self.filterTextField.delegate = self;
+		// self.filterTextField.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.3];
+		// self.filterTextField.textColor = [UIColor whiteColor];
+		// self.filterTextField.placeholder = @"Search..";
 		
 
-		[filterTextField addTarget:self 
+		// [self.filterTextField addTarget:self 
+		// 		action:@selector(filterTextFieldDidChange:) 
+		// forControlEvents:UIControlEventEditingChanged];
+
+		// UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+		// UIVibrancyEffect *vibrance = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+
+		// UIVisualEffectView *visualEffectView;
+		// visualEffectView = [[UIVisualEffectView alloc] initWithEffect:vibrance];
+
+		// visualEffectView.frame = self.filterTextField.bounds;
+		// [self.filterTextField addSubview:visualEffectView];
+		
+
+		// [view addSubview:self.filterTextField];
+
+		// UISearchBar *filterSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(15,7,view.frame.size.width - 30,30)];
+		self.filterSearchBar = [[UISearchBar alloc] initWithFrame:view.frame];
+		self.filterSearchBar.searchBarStyle = UISearchBarStyleMinimal;
+		self.filterSearchBar.placeholder = @"Search";
+
+		UITextField *searchField = [self.filterSearchBar valueForKey:@"searchField"];
+		searchField.textColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.8];
+		[searchField addTarget:self 
 				action:@selector(filterTextFieldDidChange:) 
 		forControlEvents:UIControlEventEditingChanged];
 
-		
+		// UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+		// UIVibrancyEffect *vibrance = [UIVibrancyEffect effectForBlurEffect:blurEffect];
 
-		[view addSubview:filterTextField];
+		// UIVisualEffectView *visualEffectView;
+		// visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+
+		// visualEffectView.frame = self.filterTextField.bounds;
+		// [filterSearchBar addSubview:visualEffectView];
+
+		[view addSubview:self.filterSearchBar];
 		[self.view addSubview:view];
+		// [self.view addSubview:filterSearchBar];
 
-		[filterTextField release];
+
+		// [self.view addSubview:view];
+
+
+
+		// [filterTextField release];
 		[view release];
 	// }
 
@@ -88,6 +128,15 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 	for(id item in self.displayItems) {
 		[self.allItems addObject:item];
 	}
+
+	// UITextField *searchField = [self.filterSearchBar valueForKey:@"_searchField"];
+	// searchField.textColor = [UIColor whiteColor];
+
+	// self.filterTextField.text = @"";
+
+	self.filterSearchBar.frame = CGRectMake(0,0,self.view.frame.size.width,44);
+	UITextField *searchField = [self.filterSearchBar valueForKey:@"searchField"];
+	searchField.text = @"";
 
 	// if([self.view viewWithTag:181188] == nil) {
 	// 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,44)];
