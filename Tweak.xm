@@ -22,59 +22,125 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 %property (assign) NSMutableArray *allItems;
 
 -(void)viewDidLoad {
+	%orig;
 
+	self.allItems = [[NSMutableArray alloc] init];
 
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,44)];
-	createBlurView(view, view.bounds, UIBlurEffectStyleDark);
+	// if([self.view viewWithTag:181188] == nil) {
+		UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,44)];
+		view.tag = 181188;
+		createBlurView(view, view.bounds, UIBlurEffectStyleDark);
 
-	UITextField *filterTextField = [[UITextField alloc] init];
-	filterTextField.borderStyle = UITextBorderStyleRoundedRect;
-	filterTextField.frame = CGRectMake(15,7,view.frame.size.width - 30,30);
-	filterTextField.delegate = self;
-	filterTextField.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.3];
-	filterTextField.textColor = [UIColor whiteColor];
+		UITextField *filterTextField = [[UITextField alloc] init];
+		filterTextField.borderStyle = UITextBorderStyleRoundedRect;
+		filterTextField.frame = CGRectMake(15,7,view.frame.size.width - 30,30);
+		filterTextField.delegate = self;
+		filterTextField.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.3];
+		filterTextField.textColor = [UIColor whiteColor];
 
-	
+		
 
-	[filterTextField addTarget:self 
-              action:@selector(filterTextFieldDidChange:) 
-    forControlEvents:UIControlEventEditingChanged];
+		[filterTextField addTarget:self 
+				action:@selector(filterTextFieldDidChange:) 
+		forControlEvents:UIControlEventEditingChanged];
 
-	
+		
 
-	[view addSubview:filterTextField];
-	[self.view addSubview:view];
+		[view addSubview:filterTextField];
+		[self.view addSubview:view];
 
-	[filterTextField release];
-	[view release];
+		[filterTextField release];
+		[view release];
+	// }
 
-	// Adding blur wallpaper
-	UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_displayedImage)];
-	// UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_blurredImage)];
 
 	UIScrollView* _scrollView = (UIScrollView *)MSHookIvar<UIScrollView *>(self, "_scrollView");
 	// _scrollView.backgroundColor = [UIColor colorWithPatternImage: i];
 	_scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
 
-	UIImageView *iv = [[UIImageView alloc] initWithImage:i];
-	// iv.alpha = 0.3;
-	iv.frame = [UIScreen mainScreen].bounds;
-	createBlurView(iv, iv.bounds, UIBlurEffectStyleDark);
-	[self.view addSubview:iv];
-	[self.view sendSubviewToBack:iv];
-	[iv release];
+	// if([self.view viewWithTag:151288] == nil) {
+		// Adding blur wallpaper
+		UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_displayedImage)];
+		// UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_blurredImage)];
 
-	// self.view.backgroundColor = [UIColor clearColor];
+
+
+		UIImageView *iv = [[UIImageView alloc] initWithImage:i];
+		iv.tag = 151288;
+		// iv.alpha = 0.3;
+		iv.frame = [UIScreen mainScreen].bounds;
+		createBlurView(iv, iv.bounds, UIBlurEffectStyleDark);
+		[self.view addSubview:iv];
+		[self.view sendSubviewToBack:iv];
+		[iv release];
+
+		// self.view.backgroundColor = [UIColor clearColor];
+		// self.view.backgroundColor = [UIColor colorWithPatternImage: i];
+	// }
+
 }
 
 
 -(void)viewDidAppear:(BOOL)arg1 {
 	%orig;
-	self.allItems = [[NSMutableArray alloc] init];
 
+	[self.allItems removeAllObjects];
 	for(id item in self.displayItems) {
 		[self.allItems addObject:item];
 	}
+
+	// if([self.view viewWithTag:181188] == nil) {
+	// 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,44)];
+	// 	view.tag = 181188;
+	// 	createBlurView(view, view.bounds, UIBlurEffectStyleDark);
+
+	// 	UITextField *filterTextField = [[UITextField alloc] init];
+	// 	filterTextField.borderStyle = UITextBorderStyleRoundedRect;
+	// 	filterTextField.frame = CGRectMake(15,7,view.frame.size.width - 30,30);
+	// 	filterTextField.delegate = self;
+	// 	filterTextField.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.3];
+	// 	filterTextField.textColor = [UIColor whiteColor];
+
+		
+
+	// 	[filterTextField addTarget:self 
+	// 			action:@selector(filterTextFieldDidChange:) 
+	// 	forControlEvents:UIControlEventEditingChanged];
+
+		
+
+	// 	[view addSubview:filterTextField];
+	// 	[self.view addSubview:view];
+
+	// 	[filterTextField release];
+	// 	[view release];
+	// }
+
+
+	// UIScrollView* _scrollView = (UIScrollView *)MSHookIvar<UIScrollView *>(self, "_scrollView");
+	// // _scrollView.backgroundColor = [UIColor colorWithPatternImage: i];
+	// _scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+
+	// if([self.view viewWithTag:151288] == nil) {
+	// 	// Adding blur wallpaper
+	// 	UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_displayedImage)];
+	// 	// UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_blurredImage)];
+
+
+
+	// 	UIImageView *iv = [[UIImageView alloc] initWithImage:i];
+	// 	iv.tag = 151288;
+	// 	// iv.alpha = 0.3;
+	// 	iv.frame = [UIScreen mainScreen].bounds;
+	// 	createBlurView(iv, iv.bounds, UIBlurEffectStyleDark);
+	// 	[self.view addSubview:iv];
+	// 	[self.view sendSubviewToBack:iv];
+	// 	[iv release];
+
+	// 	// self.view.backgroundColor = [UIColor clearColor];
+	// 	// self.view.backgroundColor = [UIColor colorWithPatternImage: i];
+	// }
+	
 }
 
 %new
