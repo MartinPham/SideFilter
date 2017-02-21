@@ -21,13 +21,8 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 %hook SBSideSwitcherScrollingItemViewController
 %property (assign) NSMutableArray *allItems;
 
--(void)viewDidAppear:(BOOL)arg1 {
-	%orig;
-	self.allItems = [[NSMutableArray alloc] init];
+-(void)viewDidLoad {
 
-	for(id item in self.displayItems) {
-		[self.allItems addObject:item];
-	}
 
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,44)];
 	createBlurView(view, view.bounds, UIBlurEffectStyleDark);
@@ -70,6 +65,16 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 	[iv release];
 
 	// self.view.backgroundColor = [UIColor clearColor];
+}
+
+
+-(void)viewDidAppear:(BOOL)arg1 {
+	%orig;
+	self.allItems = [[NSMutableArray alloc] init];
+
+	for(id item in self.displayItems) {
+		[self.allItems addObject:item];
+	}
 }
 
 %new
