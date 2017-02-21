@@ -57,8 +57,10 @@ static void createBlurView(UIView *view, CGRect bound, int effect)  {
 	UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_displayedImage)];
 	// UIImage *i = [[[%c(SBWallpaperController) performSelector:@selector(sharedInstance)] performSelector:@selector(_activeWallpaperView)] performSelector:@selector(_blurredImage)];
 
-	// UIScrollView* _scrollView = (UIScrollView *)MSHookIvar<UIScrollView *>(self, "_scrollView");
+	UIScrollView* _scrollView = (UIScrollView *)MSHookIvar<UIScrollView *>(self, "_scrollView");
 	// _scrollView.backgroundColor = [UIColor colorWithPatternImage: i];
+	_scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+
 	UIImageView *iv = [[UIImageView alloc] initWithImage:i];
 	// iv.alpha = 0.3;
 	iv.frame = [UIScreen mainScreen].bounds;
