@@ -1,0 +1,9 @@
+Package: com.martinpham.sidefilter
+Name: SideFilter
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: SideApp filter ios 9/10
+Maintainer: MartinPham
+Author: MartinPham
+Section: Tweaks
