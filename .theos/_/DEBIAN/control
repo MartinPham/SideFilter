@@ -3,8 +3,9 @@ Name: SideFilter
 Depends: mobilesubstrate
 Architecture: iphoneos-arm
 Description: SideApp filter ios 9/10
+Depiction: http://martinpham.gitlab.io/cydia/depictions/com.martinpham.sidefilter.html
 Maintainer: MartinPham
 Author: MartinPham
 Section: Tweaks
-Version: 0.0.1-22+debug
+Version: 0.0.1-23+debug
 Installed-Size: 124
